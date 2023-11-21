@@ -1,0 +1,33 @@
+
+
+/* CSS yang sebelumnya tidak berubah */
+
+.welcome-image img {
+    align-items: center;
+    
+    /* Mengatur margin kiri untuk gambar */
+    
+}
+
+.welcome-description {
+    /* Lebar sesuai dengan yang tersisa dalam baris */
+    flex-grow: 1;
+    /* Memberikan background pada teks "Selamat Datang" */
+    background-color: #007bff;
+    color: whitesmoke;
+    border-radius: 5px;
+    padding: 20px;
+    /* Mengatur margin kanan agar terpisah dari gambar */
+    position: relative;
+}
+
+.welcome-description .welcome-text-large {
+    font-size: 24px; /* Ukuran teks "Selamat Datang" yang berbeda */
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.welcome-description .welcome-text-small {
+    font-size: 16px; /* Ukuran teks penjelasan aplikasi yang berbeda */
+    text-align: justify;
+}

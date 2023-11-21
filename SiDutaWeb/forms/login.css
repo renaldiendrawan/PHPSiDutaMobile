@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+/* Reset some default styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'poppins', sans-serif;
+    background-image: url('header.jpg');
+    background-size: fixed;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+/* Pengaturan tampilan latar belakang */
+
+/* Pengaturan logo aplikasi */
+.logoapk{
+    width: 500px;
+    height: 500px;
+    align-items: right;
+}
+.text{
+    font-size: 20px;
+    color: #62C7C3;
+    font-family: 'poppins';
+    padding-bottom: 20px;
+    font-weight: bold;
+    line-height: normal;
+}
+.user{
+    text-align: center;
+    font-family: 'poppins',sans-serif;
+    font-weight: medium;
+    font-size: 15px;
+    padding-top: 50px;
+}
+
+.login-container {
+    background-color:rgba(255, 255, 255, 0.70);
+    padding: 50px;
+    border-radius: 10px;
+    text-align: center;
+    width: 400px;
+    
+}
+/* Pengaturan kontainer login */
+
+
+
+.input-container {
+    margin: 8px 0;
+    text-align: left;
+
+}
+/* Pengaturan kontainer input */
+
+input[type="text"],
+input[type="password"] {
+    width: 90%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.55);;
+}
+/* Pengaturan input teks */
+
+.forgot-password a {
+    font-size: 15px;
+    text-decoration: none;
+    color: blue;
+    padding-bottom: 20px;
+    text-align: center;
+    font-family: poppins;
+}
+/* Pengaturan tautan lupa kata sandi */
+
+.submit{
+    background-color: #408CFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    width: 250px;
+    height: 40px;
+}
+
+#login-button:hover {
+    background-color:#62C7C3;
+}

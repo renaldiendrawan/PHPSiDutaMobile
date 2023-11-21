@@ -1,0 +1,55 @@
+<?php
+include "connection.php";
+
+class JadwalPenimbanganResponse {
+    public $success;
+    public $message;
+    public $data;
+}
+
+try {
+    $idIbu = $_GET["id_ibu"];
+
+    // Membuat koneksi PDO ke database
+    $pdo = new PDO("mysql:host=$host;dbname=$database", $username, $password);
+
+    // Set mode error PDO ke exception
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    // Membuat kueri SQL
+    $userQuery = $pdo->prepare("SELECT tbl_anak.nama_anak, penimbangan.tgl_penimbangan, penimbangan.berat_badan, penimbangan.tinggi_badan
+        FROM `penimbangan` 
+        JOIN tbl_anak 
+        ON penimbangan.id_anak = tbl_anak.id_anak 
+        WHERE tbl_anak.id_ibu = :id_ibu
+        GROUP BY tbl_anak.id_anak
+        ORDER BY tbl_anak.id_anak ASC");
+
+    $userQuery->bindParam(':id_ibu', $idIbu, PDO::PARAM_INT);
+    $userQuery->execute();
+
+    $json = array();
+
+    while ($row = $userQuery->fetch(PDO::FETCH_ASSOC)) {
+        $json[] = $row;
+    }
+
+    // Menghasilkan respons JSON
+    $response = new JadwalPenimbanganResponse();
+    $response->success = true;
+    $response->message = "Data retrieved successfully";
+    $response->data = $json;
+
+    echo json_encode($response);
+} catch (PDOException $e) {
+    $response = new JadwalPenimbanganResponse();
+    $response->success = false;
+    $response->message = "Error: " . $e->getMessage();
+    $response->data = null;
+
+    echo json_encode($response);
+}
+
+// Menutup koneksi ke database
+$pdo = null;
+?>
