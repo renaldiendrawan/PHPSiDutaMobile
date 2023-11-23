@@ -1,7 +1,8 @@
 <?php
 include "connection.php";
 
-class JadwalPenimbanganResponse {
+class JadwalPenimbanganResponse
+{
     public $success;
     public $message;
     public $data;
@@ -44,4 +45,3 @@ try {
 
 // Menutup koneksi ke database
 $pdo = null;
-?>

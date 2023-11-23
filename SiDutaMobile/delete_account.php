@@ -1,62 +1,32 @@
 <?php
 
 include "connection.php";
+header('Content-Type: application/json; charset=utf-8');
+
 
 // Fungsi untuk menghapus akun dari database atau menyimpan status penghapusan (sesuai kebutuhan)
-function deleteAccount($userId, $pdo)
-{
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $nik_ibu = $_POST['nik_ibu'];
     // Implementasikan logika penghapusan akun di sini
 
     try {
-        // Contoh: Query untuk menghapus akun dari tabel pengguna berdasarkan ID pengguna
-        $query = "DELETE FROM tbl_orangtua WHERE id = :userId";
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+        $query = "DELETE FROM tbl_orangtua WHERE nik_ibu = :nik_ibu";
+        $stmt = $connection->prepare($query);
+        $stmt->bindParam(':nik_ibu', $nik_ibu);
+        $response = [];
 
-        if ($stmt->execute()) {
-            return true; // Penghapusan akun berhasil
+        if ($stmt->execute() && $stmt->rowCount() > 0) {
+            $response['status'] = "success";
+            $response['message'] = "Akun Terhapus";
         } else {
-            return false; // Gagal menghapus akun
+            $response['status'] = false;
+            $response['message'] = "Gagal Menghapus atau Data Tidak Ditemukan";
         }
     } catch (PDOException $e) {
-        die("Error: " . $e->getMessage());
+        die($e->getMessage());
     }
+
+    // Encode array menjadi JSON
+    echo json_encode($response, JSON_PRETTY_PRINT);
 }
 
-// Menangani permintaan HTTP DELETE
-if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
-    // Ambil ID pengguna dari parameter URL atau sesuai kebutuhan
-    $userId = $_GET['user_id']; // Ganti dengan cara Anda mengambil ID pengguna
-
-    // Periksa apakah ID pengguna valid (sesuai dengan kebutuhan)
-    if (!empty($userId)) {
-        // Gantilah informasi koneksi sesuai dengan koneksi yang Anda miliki
-        $dsn = 'mysql:host=your_host;dbname=your_database';
-        $username = 'your_username';
-        $password = 'your_password';
-
-        try {
-            $pdo = new PDO($dsn, $username, $password);
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-            // Panggil fungsi untuk menghapus akun
-            $result = deleteAccount($userId, $pdo);
-
-            // Berikan respons JSON
-            header('Content-Type: application/json');
-            echo json_encode(['success' => $result]);
-        } catch (PDOException $e) {
-            // Tangani kesalahan koneksi
-            header('Content-Type: application/json');
-            echo json_encode(['success' => false, 'error' => 'Connection failed: ' . $e->getMessage()]);
-        }
-    } else {
-        // ID pengguna tidak valid, berikan respons JSON
-        header('Content-Type: application/json');
-        echo json_encode(['success' => false, 'error' => 'Invalid user ID']);
-    }
-} else {
-    // Metode HTTP tidak didukung, berikan respons JSON
-    header('Content-Type: application/json');
-    echo json_encode(['success' => false, 'error' => 'Method not supported']);
-}

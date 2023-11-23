@@ -18,7 +18,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     } else {
         $response = array("status" => "error", "message" => "Data Profil Akun Tidak Ditemukan");
     }
-
 } else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // POST request: Mengedit data profil akun
     $contentType = $_SERVER["CONTENT_TYPE"];
@@ -33,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         }
         $_POST = $requestData;
     }
-    $id_ibu = $_POST['id_ibu'];
+    
     $nama_ibu = $_POST['nama_ibu'];
     $nik_ibu = $_POST['nik_ibu'];
     $tanggal_lahir = $_POST['tanggal_lahir'];
@@ -43,8 +42,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     // Perbarui profil akun
     $sql = "UPDATE tbl_orangtua
     SET nama_ibu = '$nama_ibu', nik_ibu = '$nik_ibu', tanggal_lahir = '$tanggal_lahir', 
-    alamat = '$alamat', email = '$email' WHERE id_ibu = '$id_ibu'";
-    
+    alamat = '$alamat', email = '$email' WHERE nik_ibu = '$nik_ibu'";
+
     $stmt = $connection->prepare($sql);
     $stmt->execute();
 
@@ -55,7 +54,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     } else {
         $response = array("status" => "error", "message" => "Profil Akun Gagal Diubah");
     }
-
 } else {
     $response = array("status" => "error", "message" => "Bukan metode POST atau GET yang valid");
 }
@@ -65,4 +63,3 @@ $connection = null;
 
 // Tampilkan respons
 echo json_encode($response);
-?>

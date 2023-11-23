@@ -7,11 +7,11 @@ header("Content-Type: application/json");
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     // GET request: Menampilkan data balita
 
-    $idIbu = $_GET['id_ibu']; // Anda perlu mengirimkan nama_anak dalam permintaan GET
-    
-    $sql = "SELECT * FROM tbl_anak WHERE id_ibu = ?";
+    $nik_ibu = $_GET['nik_ibu']; // Anda perlu mengirimkan nama_anak dalam permintaan GET
+
+    $sql = "SELECT * FROM tbl_anak WHERE nik_ibu = ?";
     $stmt = $connection->prepare($sql);
-    $stmt->execute([$idIbu]);
+    $stmt->execute([$nik_ibu]);
 
     if ($stmt->rowCount() > 0) {
         $results = array(); // Initialize an array to store the results
@@ -24,9 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     } else {
         $response = array("status" => "error", "message" => "Data Balita Tidak Ditemukan");
     }
-
-} 
-else {
+} else {
     $response = array("status" => "error", "message" => "Bukan metode POST atau GET yang valid");
 }
 
@@ -35,4 +33,3 @@ $connection = null;
 
 // Tampilkan respons
 echo json_encode($response);
-?>

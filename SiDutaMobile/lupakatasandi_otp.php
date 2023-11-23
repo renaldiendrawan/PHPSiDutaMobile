@@ -4,12 +4,12 @@ $connection = null;
 try {
 
     include('connection.php');
-    require ('vendor/autoload.php');
-    require ('phpmailer.php');
+    require('vendor/autoload.php');
+    require('phpmailer.php');
 
     // Kode untuk mengambil data dari database
     $email = $_POST['email'];
-    $kode = mt_rand(000000,999999);
+    $kode = mt_rand(000000, 999999);
 
     $query = "SELECT * FROM tbl_orangtua WHERE email = :email";
     $stmt = $connection->prepare($query);
@@ -43,4 +43,3 @@ try {
 } catch (PDOException $e) {
     echo "Error ! " . $e->getMessage();
 }
-?>

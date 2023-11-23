@@ -3,7 +3,8 @@ include "connection.php";
 
 // $nik_ibu = $_GET['nik_ibu'];
 
-class LaporanImunisasiResponse {
+class LaporanImunisasiResponse
+{
     public $success;
     public $message;
     public $data;
@@ -11,7 +12,7 @@ class LaporanImunisasiResponse {
 
 try {
 
-    $idAnak = $_GET["id_ibu"];
+    $idAnak = $_POST["nik_ibu"];
 
     // Membuat koneksi PDO ke database
     $pdo = new PDO("mysql:host=$host;dbname=$database", $username, $password);
@@ -20,12 +21,12 @@ try {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Membuat kueri SQL
-    $userQuery = $pdo->prepare("SELECT tbl_anak.nama_anak, imunisasi.tanggal_imunisasi, imunisasi.jenis_imunisasi
+    $userQuery = $pdo->prepare("SELECT tbl_anak.nama_anak, imunisasi.tanggal_imunisasi, imunisasi.jenis_imunisasi, imunisasi.id_imunisasi
     FROM `imunisasi` 
     JOIN tbl_anak 
     ON imunisasi.id_anak = tbl_anak.id_anak 
-    WHERE tbl_anak.id_ibu = $idAnak
-    GROUP BY tbl_anak.id_anak
+    WHERE tbl_anak.nik_ibu = $idAnak
+    GROUP BY imunisasi.id_imunisasi
     ORDER BY tbl_anak.id_anak ASC");
     // $userQuery->execute(array($nik_ibu));
     $userQuery->execute();
@@ -51,4 +52,3 @@ try {
 
 // Menutup koneksi ke database
 $pdo = null;
-?>

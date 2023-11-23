@@ -1,14 +1,15 @@
 <?php
 include "connection.php";
 
-class JadwalPenimbanganResponse {
+class JadwalPenimbanganResponse
+{
     public $success;
     public $message;
     public $data;
 }
 
 try {
-    $idIbu = $_GET["id_ibu"];
+    $idIbu = $_POST["nik_ibu"];
 
     // Membuat koneksi PDO ke database
     $pdo = new PDO("mysql:host=$host;dbname=$database", $username, $password);
@@ -17,15 +18,15 @@ try {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Membuat kueri SQL
-    $userQuery = $pdo->prepare("SELECT tbl_anak.nama_anak, penimbangan.tgl_penimbangan, penimbangan.berat_badan, penimbangan.tinggi_badan
+    $userQuery = $pdo->prepare("SELECT tbl_anak.nama_anak, penimbangan.tgl_penimbangan, penimbangan.berat_badan, penimbangan.tinggi_badan, penimbangan.id_penimbangan
         FROM `penimbangan` 
         JOIN tbl_anak 
         ON penimbangan.id_anak = tbl_anak.id_anak 
-        WHERE tbl_anak.id_ibu = :id_ibu
-        GROUP BY tbl_anak.id_anak
+        WHERE tbl_anak.nik_ibu = :nik_ibu
+        GROUP BY penimbangan.id_penimbangan
         ORDER BY tbl_anak.id_anak ASC");
 
-    $userQuery->bindParam(':id_ibu', $idIbu, PDO::PARAM_INT);
+    $userQuery->bindParam(':nik_ibu', $idIbu, PDO::PARAM_INT);
     $userQuery->execute();
 
     $json = array();
@@ -52,4 +53,3 @@ try {
 
 // Menutup koneksi ke database
 $pdo = null;
-?>

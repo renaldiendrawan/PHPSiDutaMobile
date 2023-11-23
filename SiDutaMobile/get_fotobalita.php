@@ -3,7 +3,8 @@ include "connection.php";
 
 // $nik_ibu = $_GET['nik_ibu'];
 
-class DataBalitaResponse {
+class DataBalitaResponse
+{
     public $success;
     public $message;
     public $data;
@@ -45,4 +46,3 @@ try {
 
 // Menutup koneksi ke database
 $pdo = null;
-?>

@@ -6,7 +6,7 @@ header("Content-Type: application/json");
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     // GET request: Menampilkan data balita
-    
+
     $sql = "SELECT * FROM `tbl_artikel` LIMIT 5";
     $stmt = $connection->prepare($sql);
 
@@ -22,9 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     } catch (PDOException $e) {
         $response = array("status" => "error", "message" => "Error executing query: " . $e->getMessage());
     }
-
-} 
-else {
+} else {
     $response = array("status" => "error", "message" => "Bukan metode POST atau GET yang valid");
 }
 
@@ -33,4 +31,3 @@ $connection = null;
 
 // Tampilkan respons
 echo json_encode($response);
-?>

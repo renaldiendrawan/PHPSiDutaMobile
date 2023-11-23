@@ -45,14 +45,13 @@ if ($_POST) {
                 'nama_ibu' => $nama_ibu
             ];
         } catch (Exception $e) {
-            die ($e->getMessage());
+            die($e->getMessage());
         }
-
     }
 
     // Jadikan data JSON
     echo json_encode($response, JSON_PRETTY_PRINT);
 
     // Print
-   
+
 }

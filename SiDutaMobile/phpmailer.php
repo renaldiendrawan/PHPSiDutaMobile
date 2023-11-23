@@ -1,17 +1,20 @@
 <?php
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-class EmailSender {    
-    
+class EmailSender
+{
+
     private $smtpHost = 'smtp.gmail.com';
     private $smtpUsername = 'renaldiendrawan@gmail.com';
     private $smtpPassword = 'uhxp xhwe syjn yttv';
     private $smtpPort = 587;
     private $fromEmail = 'renaldiendrawan@gmail.com';
-    private $fromName = 'siduta';  
+    private $fromName = 'siduta';
 
-    public function generateOTP($length = 6) {
+    public function generateOTP($length = 6)
+    {
         $otp = '';
         $characters = '0123456789';
         $charactersLength = strlen($characters);
@@ -21,7 +24,8 @@ class EmailSender {
         return $otp;
     }
 
-    public function sendEmail($email, $otp) {
+    public function sendEmail($email, $otp)
+    {
         $mail = new PHPMailer(true);
         try {
             $mail->isSMTP();
@@ -36,9 +40,9 @@ class EmailSender {
             $mail->addAddress($email);
             $mail->Subject = "$otp adalah Kode OTP Anda";
 
-           
-                $mail->Body = 'Gunakan kode otp berikut untuk mengganti password anda: ' . $otp;
-            
+
+            $mail->Body = 'Gunakan kode otp berikut untuk mengganti password anda: ' . $otp;
+
 
             // kirim email
             $mail->send();
@@ -49,5 +53,3 @@ class EmailSender {
         }
     }
 }
-
-?>
