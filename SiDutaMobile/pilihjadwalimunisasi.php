@@ -3,9 +3,9 @@
 include "connection.php";
 
 try {
-    $nama = $_POST['nama'];
+    $nama_anak = $_POST['nama_anak'];
     // Query SQL untuk mendapatkan nama anak dari tabel anak
-    $sql = "SELECT tanggal_posyandu, jam_posyandu, tempat_posyandu, jenis_imunisasi FROM tbl_anak INNER JOIN jadwal ON tbl_anak.id_anak = jadwal.id_anak WHERE BINARY nama_anak = '$nama'";
+    $sql = "SELECT tanggal_posyandu, jam_posyandu, tempat_posyandu, jenis_imunisasi FROM tbl_anak INNER JOIN jadwal ON tbl_anak.id_anak = jadwal.id_anak WHERE BINARY nama_anak = '$nama_anak'";
 
     // Menyiapkan statement
     $stmt = $connection->prepare($sql);
@@ -22,6 +22,7 @@ try {
     } else {
         echo "Tidak ada data anak dalam database.";
     }
+
 } catch (PDOException $e) {
     echo "Koneksi gagal: " . $e->getMessage();
 }

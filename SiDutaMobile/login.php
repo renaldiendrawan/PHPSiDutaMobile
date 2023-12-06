@@ -1,27 +1,24 @@
 <?php
-
 include 'connection.php';
 
-// if ($_POST) {
-// Data
 $nik_ibu = isset($_POST['nik_ibu']) ? ($_POST['nik_ibu']) : '';
-$kata_sandi = isset($_POST['kata_sandi']) ? md5($_POST['kata_sandi']) : '';
+$kata_sandi = isset($_POST['kata_sandi']) ? $_POST['kata_sandi'] : '';
 
 $response = []; // Data Response
 
-// Cek nik di dalam database
-$userQuery = $connection->prepare("SELECT * FROM tbl_orangtua where nik_ibu = ?");
+$userQuery = $connection->prepare("SELECT * FROM tbl_orangtua WHERE nik_ibu = ?");
 $userQuery->execute(array($nik_ibu));
 $query = $userQuery->fetch();
 
 if ($userQuery->rowCount() == 0) {
     $response['status'] = false;
     $response['message'] = "NIK Tidak Terdaftar";
+
 } else {
-    // Ambil kata sandi di db
     $kata_sandiDB = $query['kata_sandi'];
 
-    if ($kata_sandi == $kata_sandiDB) {
+    // Gunakan password_verify untuk memverifikasi kata sandi
+    if (password_verify($kata_sandi, $kata_sandiDB)) {
         $response['status'] = true;
         $response['message'] = "Berhasil Masuk";
         $response['data'] = [
@@ -31,6 +28,7 @@ if ($userQuery->rowCount() == 0) {
             'alamat' => $query['alamat'],
             'email' => $query['email']
         ];
+
     } else {
         $response['status'] = false;
         $response['message'] = "Kata Sandi Anda Salah";
@@ -39,5 +37,4 @@ if ($userQuery->rowCount() == 0) {
 
 // Jadikan data JSON
 echo json_encode($response);
-   
-// }
+?>

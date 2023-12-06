@@ -48,12 +48,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             } else {
                 $response = array("status" => "success", "message" => "photo profile berhasil diupdate");
             }
+
         } else {
             $response = array("status" => "error", "message" => "photo profile gagal diupdate");
         }
+
     } else {
         $response = array("status" => "error", "message" => "Email tidak ditemukan");
     }
+
 } else {
     $response = array("status" => "error", "message" => "method is not post");
 }

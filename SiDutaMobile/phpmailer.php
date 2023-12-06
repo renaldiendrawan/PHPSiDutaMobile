@@ -11,7 +11,7 @@ class EmailSender
     private $smtpPassword = 'uhxp xhwe syjn yttv';
     private $smtpPort = 587;
     private $fromEmail = 'renaldiendrawan@gmail.com';
-    private $fromName = 'siduta';
+    private $fromName = 'SiDuta';
 
     public function generateOTP($length = 6)
     {
@@ -40,9 +40,7 @@ class EmailSender
             $mail->addAddress($email);
             $mail->Subject = "$otp adalah Kode OTP Anda";
 
-
             $mail->Body = 'Gunakan kode otp berikut untuk mengganti password anda: ' . $otp;
-
 
             // kirim email
             $mail->send();

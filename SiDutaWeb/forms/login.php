@@ -1,30 +1,47 @@
-<?php 
+<?php
 include("koneksi.php");
-// Proses login
+
 if (isset($_POST["submit"])) {
     $nama_kader = $_POST["nama_kader"];
     $password = $_POST["kata_sandi"];
 
-    // Query untuk memeriksa user di database
-    $query = "SELECT * FROM tbl_kader 
-              WHERE nama_kader = '$nama_kader' AND kata_sandi = '$password';";
-    $result = $koneksi->query($query);
+    // Use prepared statement to prevent SQL injection
+    $query = "SELECT id_kader, nama_kader, kata_sandi FROM tbl_kader WHERE nama_kader = ?";
+    $stmt = $koneksi->prepare($query);
+    $stmt->bind_param("s", $nama_kader);
+    $stmt->execute();
+    $stmt->store_result();
 
-    if ($result->num_rows == 1) {
-        // Login berhasil, arahkan ke halaman lain
-        // echo "login berhasil"; // Ganti dengan halaman setelah login berhasil
-        header("Location: index.php");
-        exit();
+    if ($stmt->num_rows == 1) {
+        $stmt->bind_result($id, $nama_kader_db, $md5_password_db);
+        $stmt->fetch();
+
+        // Verifying the entered password with the MD5 hashed password stored in the database
+        if (md5($password) == $md5_password_db) {
+            // Password verification successful, proceed with login
+            session_start();
+            $_SESSION['id_kader'] = $id;
+
+            header("Location: dashboard.php");
+            exit();
+        } else {
+            // Password verification failed, display error message
+            loginError();
+        }
     } else {
-        // Login gagal, tampilkan pesan error
-        echo "<script type='text/javascript'>
-        alert('Login gagal. Periksa kembali Nama Kader dan Password Anda.');
-        location.replace('login1.php');
-        </script>";
-        
+        // User not found, display error message
+        loginError();
     }
 }
 
-// Tutup koneksi database
+// Function to display login error message and redirect
+function loginError() {
+    echo "<script type='text/javascript'>
+    alert('Login gagal. Periksa kembali Nama Kader dan Password Anda.');
+    location.replace('login1.php');
+    </script>";
+}
+
+// Close the database connection
 $koneksi->close();
 ?>

@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             move_uploaded_file($_FILES['img_artikel']['tmp_name'], $targetFile);
 
             // Siapkan pernyataan SQL untuk memasukkan data ke dalam tabel
-            $sql = "INSERT INTO tbl_artikel (judul_artikel, isi_artikel, id_kader, tgl_dibuat, img_artikel) 
+            $sql = "INSERT INTO tbl_artikel (judul_artikel, isi_artikel, id_kader, tanggal_artikel, img_artikel) 
                     VALUES ('$judul', '$isi', '$id_kader', '$tanggal_dibuat', '$gambar')";
 
             // Eksekusi pernyataan SQL

@@ -26,11 +26,13 @@ try {
         $stmt->bindParam(':kode', $kode);
         $stmt->bindParam(':email', $email);
         $stmt->execute();
+
         // Data ditemukan
         $response = array(
             'status' => true,
             'message' => 'Akun Terdaftar'
         );
+
     } else {
         // Data tidak ditemukan
         $response = array(

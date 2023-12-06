@@ -1,9 +1,16 @@
 <?php
+// untuk membuka localhost
 
 $host = "localhost";
 $username = "root";
 $passsword = "";
-$database = "test_posyandu";
+$database = "posyandu11";
+
+// untuk membuka hosting
+
+// $username = "tifz1761_root";
+// $passsword = "tifnganjuk321";
+// $database = "tifz1761_posyandu";
 
 $koneksi = new mysqli($host, $username, $passsword, $database);
 

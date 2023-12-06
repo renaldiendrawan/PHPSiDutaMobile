@@ -9,7 +9,7 @@ if (isset($_POST['update'])) {
     $tinggi_badan = $_POST['tinggi_badan'];
 
     // Query untuk mengupdate data penimbangan
-    $query = "UPDATE tbl_penimbangan SET 
+    $query = "UPDATE penimbangan SET 
     id_anak = '$id_anak', 
     tgl_penimbangan = '$tgl_penimbangan', 
     berat_badan = '$berat_badan', 

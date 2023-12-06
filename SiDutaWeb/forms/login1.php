@@ -34,13 +34,53 @@
                     background: #0205a1;
                 }
             </style>
+            <a class="back-button" href="../index.php">
+                <div class="circle-icon">
+                    <i class="fa fa-arrow-left" style="color: #0205a1 ; padding-top: 10px;"></i>
+                </div>
+            </a>
+            <style>
+                .circle-icon {
+                    display: inline-block;
+                    width: 40px;
+                    height: 40px;
+                    background-color: #fff;
+                    /* Warna latar belakang lingkaran */
+                    border-radius: 50%;
+                    /* Agar bentuknya menjadi lingkaran */
+                    text-align: center;
+                    line-height: 40px;
+                    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+                    /* Efek bayangan */
+                }
+
+                .circle-icon i {
+                    color: #000;
+                    /* Warna ikon */
+                    font-size: 20px;
+                }
+
+                .back-button {
+                    position: absolute;
+                    top: 10px;
+                    left: 10px;
+                    text-decoration: none;
+                }
+            </style>
+
+
             <div class="wrap-login100">
                 <div class="login100-pic js-tilt" data-tilt>
-                    <img src="sarjono.png" alt="IMG" style="margin-left: 10%; width: 100%; height: 100%; margin-top: -20%;">
+                    <img src="sarjono.png" alt="IMG" style="margin-left: 10%; width: 110%; height: 100%; margin-top: -20%;">
                 </div>
                 <form name="loginForm" class="login100-form validate-form" action="login.php" method="POST" onsubmit="return validateForm()">
-                    <span class="login100-form-title">
+                    <span class="login100-form-title" style="margin-top: -20%;">
                         Login Kader
+                        <div style=" margin-top: 15px; padding: 5px 10px 0px 10px">
+                            <marquee style="" onmouseover="this.stop();" onmouseout="this.start();">
+                                <h3 style="margin-top: 0; margin-bottom: 0">Selamat Datang di Website Sistem informasi Posyandu Balita</h3>
+                            </marquee>
+                        </div>
                     </span>
                     <div class="wrap-input100 validate-input" data-validate="">
                         <input class="input100" type="text" name="nama_kader" placeholder="Nama Kader">
@@ -56,11 +96,6 @@
                             <i class="fa fa-lock" aria-hidden="true"></i>
                         </span>
                     </div>
-                    <div class="container-login100-form-btn">
-                        <button class="login100-form-btn" type="submit" name="submit" id="submit">
-                            Masuk
-                        </button>
-                    </div>
                     <div class="text-center p-t-12">
                         <span class="txt1" style="font-size: 15px;">
                             lupa
@@ -68,6 +103,11 @@
                         <a class="txt2" style="font-size: 15px;" href="lupaSandi.php">
                             Kata Sandi?
                         </a>
+                    <div class="container-login100-form-btn">
+                        <button class="login100-form-btn" type="submit" name="submit" id="submit">
+                            Masuk
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>

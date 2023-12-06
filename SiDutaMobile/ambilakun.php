@@ -16,6 +16,7 @@ if (isset($_POST['nik_ibu'])) {
     } else {
         echo json_encode(["status" => false, "message" => "Data Profil Akun Tidak Ditemukan"]);
     }
+
 } else {
     echo json_encode(["status" => false, "message" => "Parameter 'nik_ibu' is missing in the request."]);
 }

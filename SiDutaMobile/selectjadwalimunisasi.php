@@ -15,11 +15,24 @@ try {
     // Set mode error PDO ke exception
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // Membuat kueri SQL
-    $query = "SELECT tanggal_posyandu, jam_posyandu, tempat_posyandu, jenis_imunisasi FROM jadwal";
+    // Mendapatkan tanggal hari ini
+    $today = date("Y-m-d");
 
-    // Menjalankan kueri SQL dengan PDO
-    $stmt = $pdo->query($query);
+    // Mendapatkan nik_ibu dari $_POST
+    $nik_ibu = isset($_POST['nik_ibu']) ? $_POST['nik_ibu'] : '';
+
+    // Membuat kueri SQL dengan kondisi WHERE dan JOIN untuk nik_ibu
+    $query = "SELECT jadwal.tanggal_posyandu, MAX(jadwal.jam_posyandu) AS jam_posyandu, jadwal.tempat_posyandu, jadwal.jenis_imunisasi 
+              FROM jadwal
+              JOIN tbl_anak ON jadwal.id_anak = tbl_anak.id_anak
+              WHERE jadwal.tanggal_posyandu >= :today AND tbl_anak.nik_ibu = :nik_ibu 
+              GROUP BY jadwal.tanggal_posyandu";
+
+    // Menyiapkan dan mengeksekusi kueri SQL dengan PDO
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":today", $today);
+    $stmt->bindParam(":nik_ibu", $nik_ibu);
+    $stmt->execute();
 
     $json = array();
 
@@ -34,6 +47,7 @@ try {
     $response->data = $json;
 
     echo json_encode($response);
+
 } catch (PDOException $e) {
     $response = new JadwalImunisasiResponse();
     $response->success = false;
@@ -45,3 +59,4 @@ try {
 
 // Menutup koneksi ke database
 $pdo = null;
+?>

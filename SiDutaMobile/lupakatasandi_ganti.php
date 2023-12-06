@@ -4,15 +4,15 @@ $connection = null;
 try {
     // Config
     $host = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "test_posyandu";
+    $username = "tifz1761_root";
+    $password = "tifnganjuk321";
+    $dbname = "tifz1761_posyandu";
 
     // Connect
     $database = "mysql:dbname=$dbname;host=$host";
     $connection = new PDO($database, $username, $password);
     $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    // include('connection.php');
+
     // Kode untuk mengambil data dari database
     $kode = isset($_POST['kode_otp']) ? ($_POST['kode_otp']) : '';
     $password = $_POST['kata_sandi']; // 'password' harus sesuai dengan key yang dikirim dari Android
@@ -36,6 +36,7 @@ try {
             'status' => true,
             'message' => 'Akun Terdaftar'
         );
+
     } else {
         // Data tidak ditemukan
         $response = array(

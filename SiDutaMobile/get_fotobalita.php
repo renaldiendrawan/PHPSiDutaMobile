@@ -1,8 +1,6 @@
 <?php
 include "connection.php";
 
-// $nik_ibu = $_GET['nik_ibu'];
-
 class DataBalitaResponse
 {
     public $success;

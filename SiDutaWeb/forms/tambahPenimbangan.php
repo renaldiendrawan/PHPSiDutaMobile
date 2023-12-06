@@ -7,7 +7,7 @@ $beratBadan = $_POST['berat_badan'];
 $tinggiBadan = $_POST['tinggi_badan'];
 
 // Query SQL untuk menambahkan data penimbangan
-$sql = "INSERT INTO tbl_penimbangan (id_anak, tgl_penimbangan, berat_badan, tinggi_badan)
+$sql = "INSERT INTO penimbangan (id_anak, tgl_penimbangan, berat_badan, tinggi_badan)
         VALUES ('$idAnak', '$tanggalPenimbangan', '$beratBadan', '$tinggiBadan')";
 
 if ($koneksi->query($sql) === TRUE) {

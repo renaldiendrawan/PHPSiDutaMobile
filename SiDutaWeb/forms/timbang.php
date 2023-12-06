@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="width: 100%;">
 
 <head>
     <meta charset="utf-8" />
@@ -25,7 +25,7 @@
 
 </head>
 
-<body style="height: 150%; width: 100%;">
+<body style="height: max-content;width: auto;"">
     <div class="wrapper d-flex align-items-stretch">
         <!-- Sidebar -->
         <?php include 'navbar.php'; ?>
@@ -34,7 +34,7 @@
                 <div class="container-fluid px-4">
                     <h1 class="mt-4">Data Penimbangan</h1>
                     <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="dashboard.php">Dashboard</a></li>
                         <li class="breadcrumb-item active">Data Penimbangan</li>
                     </ol>
                     <div class="card mb-4">
@@ -80,9 +80,9 @@
                                     <?php
                                     include("koneksi.php");
                                     // Query SQL dengan INNER JOIN untuk mengambil data penimbangan anak
-                                    $sql = "SELECT tbl_penimbangan.*, tbl_anak.nama_anak 
-                FROM tbl_penimbangan
-                INNER JOIN tbl_anak ON tbl_penimbangan.id_anak = tbl_anak.id_anak";
+                                    $sql = "SELECT penimbangan.*, tbl_anak.nama_anak 
+                FROM penimbangan
+                INNER JOIN tbl_anak ON penimbangan.id_anak = tbl_anak.id_anak";
 
                                     $result = $koneksi->query($sql);
 
@@ -159,7 +159,7 @@
                                             <div class="modal-body">
                                                 <div class="form-group">
                                                     <label for="id_anak">Pilih Anak</label>
-                                                    <select id="id_anak" name="id_anak" class="form-control" required>
+                                                    <select id="id_anak" name="id_anak" class="form-control" required style="border-color: black; border :1px solid black;">
                                                         <?php
                                                         include("koneksi.php");
                                                         $sql = "SELECT id_anak, nama_anak FROM tbl_anak";
@@ -172,15 +172,15 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="tgl_penimbangan">Tanggal Penimbangan</label>
-                                                    <input type="date" id="tgl_penimbangan" name="tgl_penimbangan" class="form-control" required>
+                                                    <input type="date" id="tgl_penimbangan" name="tgl_penimbangan" class="form-control" required style="border-color: black; border :1px solid black;">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="berat_badan">Berat Badan</label>
-                                                    <input type="number" step="0.01" id="berat_badan" name="berat_badan" class="form-control" required>
+                                                    <input type="number" step="0.01" id="berat_badan" name="berat_badan" class="form-control" required style="border-color: black; border :1px solid black;">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="tinggi_badan">Tinggi Badan</label>
-                                                    <input type="number" step="0.01" id="tinggi_badan" name="tinggi_badan" class="form-control" required>
+                                                    <input type="number" step="0.01" id="tinggi_badan" name="tinggi_badan" class="form-control" required style="border-color: black; border :1px solid black;">
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
@@ -202,12 +202,12 @@
                                             </div>
                                             <div class="modal-body">
                                                 <p class="small" style="color: black; font-size: 110%;">Apakah Anda yakin ingin menghapus data ini?</p>
-                                                <p class="small" style="color: black; font-size: 130%;"><small>Tindakan ini tidak bisa dibatalkan</small></p>
+                                                <p class="small" style="color: black; font-size: 115%;"><small> Ketika data terhapus Tindakan ini tidak bisa dibatalkan</small></p>
                                                 <input type="hidden" name="idToDelete" id="idToDelete">
                                             </div>
                                             <div class="modal-footer">
                                                 <input type="button" class="btn btn-default" data-dismiss="modal" value="Batal" style="background-color: blue; color: white;">
-                                                <input type="submit" class="btn btn-danger" value="Hapus" name="delete">
+                                                <input type="submit" class="btn btn-danger" value="Hapus" name="Hapus" style="background-color: red;">
                                             </div>
                                         </form>
                                     </div>

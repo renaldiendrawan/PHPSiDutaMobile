@@ -3,12 +3,11 @@
 include "connection.php";
 header('Content-Type: application/json; charset=utf-8');
 
-
 // Fungsi untuk menghapus akun dari database atau menyimpan status penghapusan (sesuai kebutuhan)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nik_ibu = $_POST['nik_ibu'];
-    // Implementasikan logika penghapusan akun di sini
 
+    // Implementasikan logika penghapusan akun di sini
     try {
         $query = "DELETE FROM tbl_orangtua WHERE nik_ibu = :nik_ibu";
         $stmt = $connection->prepare($query);
@@ -22,6 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $response['status'] = false;
             $response['message'] = "Gagal Menghapus atau Data Tidak Ditemukan";
         }
+
     } catch (PDOException $e) {
         die($e->getMessage());
     }

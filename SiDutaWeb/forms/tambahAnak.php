@@ -1,5 +1,6 @@
 <?php
 include("koneksi.php");
+
 // Ambil data dari form
 $nikAnak = $_POST['nik'];
 $namaAnak = $_POST['nama'];
@@ -8,20 +9,23 @@ $jenisKelamin = $_POST['jenis-kelamin'];
 $beratBadanLahir = $_POST['bb-lahir'];
 $tinggiBadanLahir = $_POST['tb-lahir'];
 $alamat = $_POST['alamat'];
-$namaIbu = $_POST['nama-ibu']; // Ambil nama ibu yang dipilih oleh pengguna dari input field
+$namaOrangtua = $_POST['nama-orangtua']; // Ambil nama ibu dan nama ayah yang dipilih oleh pengguna dari input field
+
+// Pisahkan nama ibu dan nama ayah
+list($namaIbu, $namaAyah) = explode('|', $namaOrangtua);
 
 // Query SQL untuk mencari ID ibu berdasarkan nama ibu yang dipilih
-$query = "SELECT id_ibu FROM tbl_ibu WHERE nama_ibu = '$namaIbu'";
+$query = "SELECT nik_ibu FROM tbl_orangtua WHERE nama_ibu = '$namaIbu' AND nama_ayah = '$namaAyah'";
 
 $result = $koneksi->query($query);
 
 if ($result->num_rows > 0) {
     // Jika ditemukan hasil, ambil ID ibu
     $row = $result->fetch_assoc();
-    $idIbu = $row['id_ibu'];
+    $idIbu = $row['nik_ibu'];
 
     // Sekarang, Anda memiliki ID ibu yang sesuai yang dapat ditambahkan ke tabel anak
-    $sql = "INSERT INTO tbl_anak (id_anak, nama_anak, tgl_lahir, jenis_kelamin, bb_lahir, tb_lahir, alamat, id_ibu)
+    $sql = "INSERT INTO tbl_anak (id_anak, nama_anak, tanggal_lahir_anak, jenis_kelamin, bb_lahir, tb_lahir, alamat, nik_ibu)
             VALUES ('$nikAnak', '$namaAnak', '$tanggalLahir', '$jenisKelamin', '$beratBadanLahir', '$tinggiBadanLahir', '$alamat', '$idIbu')";
 
     if ($koneksi->query($sql) === TRUE) {
@@ -30,10 +34,14 @@ if ($result->num_rows > 0) {
         location.replace('anak.php');
         </script>";
     } else {
-        echo "Error: " . $sql . "<br>" . $koneksi->error;
+        echo "<script type='text/javascript'>
+        alert('". $sql . "<br>" . $koneksi->error."'); </script>";
     }
 } else {
-    echo "Nama ibu tidak ditemukan dalam database.";
+    echo "<script type='text/javascript'>
+        alert('Nama ibu dan/atau nama ayah tidak ditemukan dalam database.');
+        location.replace('anak.php');
+        </script>";
 }
 
 $koneksi->close();

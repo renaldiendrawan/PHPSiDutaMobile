@@ -1,12 +1,12 @@
 <?php
 include("koneksi.php");
 
-if (isset($_POST['delete'])) {
+if (isset($_POST['Hapus'])) {
     // Ambil ID anak yang akan dihapus dari input form
     $idToDelete = $_POST['idToDelete'];
 
     // Query DELETE untuk menghapus data anak berdasarkan ID anak
-    $sql = "DELETE FROM tbl_penimbangan WHERE id_penimbangan = '$idToDelete'";
+    $sql = "DELETE FROM penimbangan WHERE id_penimbangan = '$idToDelete'";
 
     if ($koneksi->query($sql) === TRUE) {
         echo "<script type='text/javascript'>

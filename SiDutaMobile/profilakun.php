@@ -30,13 +30,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             echo json_encode(['status' => 'error', 'message' => 'Invalid JSON data']);
             exit();
         }
+
         $_POST = $requestData;
     }
-    
+
     $nama_ibu = $_POST['nama_ibu'];
     $nik_ibu = $_POST['nik_ibu'];
     $tanggal_lahir = $_POST['tanggal_lahir'];
-    $alamat  = $_POST['alamat'];
+    $alamat = $_POST['alamat'];
     $email = $_POST['email'];
 
     // Perbarui profil akun
@@ -54,6 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     } else {
         $response = array("status" => "error", "message" => "Profil Akun Gagal Diubah");
     }
+    
 } else {
     $response = array("status" => "error", "message" => "Bukan metode POST atau GET yang valid");
 }

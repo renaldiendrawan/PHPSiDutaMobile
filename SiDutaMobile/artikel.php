@@ -19,9 +19,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         } else {
             $response = array("status" => "error", "message" => "Artikel Tidak Ditemukan");
         }
+
     } catch (PDOException $e) {
         $response = array("status" => "error", "message" => "Error executing query: " . $e->getMessage());
     }
+
 } else {
     $response = array("status" => "error", "message" => "Bukan metode POST atau GET yang valid");
 }

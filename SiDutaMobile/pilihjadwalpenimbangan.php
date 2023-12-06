@@ -3,9 +3,11 @@
 include "connection.php";
 
 try {
-    $nama = $_POST['nama'];
-    // Query SQL untuk mendapatkan nama anak dari tabel anak
-    $sql = "SELECT tanggal_posyandu, jam_posyandu, tempat_posyandu FROM tbl_anak INNER JOIN jadwal ON tbl_anak.id_anak = jadwal.id_anak WHERE BINARY nama_anak = '$nama'";
+    // Query SQL untuk mendapatkan nama anak dari tabel anak tanpa duplikat
+    $sql = "SELECT DISTINCT nama_anak, MAX(tanggal_posyandu) as tanggal_posyandu, MAX(jam_posyandu) as jam_posyandu, MAX(tempat_posyandu) as tempat_posyandu
+            FROM tbl_anak
+            JOIN jadwal ON tbl_anak.id_anak = jadwal.id_anak
+            GROUP BY nama_anak";
 
     // Menyiapkan statement
     $stmt = $connection->prepare($sql);
@@ -22,6 +24,7 @@ try {
     } else {
         echo "Tidak ada data anak dalam database.";
     }
+    
 } catch (PDOException $e) {
     echo "Koneksi gagal: " . $e->getMessage();
 }

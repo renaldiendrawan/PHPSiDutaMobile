@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="width: 100%;">
 
 <head>
     <meta charset="utf-8" />
@@ -23,7 +23,7 @@
 
 </head>
 
-<body style="height: max-content; width: 100%;" >
+<body style="height: max-content;width: 100%;" >
     <div class="wrapper d-flex align-items-stretch">
         <!-- Sidebar -->
         <?php include 'navbar.php'; ?>
@@ -32,7 +32,7 @@
                 <div class="container-fluid px-4" >
                     <h1 class="mt-4">Artikel</h1>
                     <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="dashboard.php">Dashboard</a></li>
                         <li class="breadcrumb-item active">Artikel</li>
                     </ol>
                     <div class="card mb-4">
@@ -91,7 +91,7 @@
                                             $judul = $row['judul_artikel'];
                                             $deskripsi = $row['isi_artikel'];
                                             $gambar = $row['img_artikel'];
-                                            $tanggal_dibuat = $row['tgl_dibuat'];
+                                            $tanggal_dibuat = $row['tanggal_artikel'];
                                             $nama_kader = $row['nama_kader'];
 
                                             echo '<tr>';
@@ -153,11 +153,11 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="isi_artikel">Deskripsi</label>
-                                                    <textarea class="form-control" id="isi_artikel" name="isi_artikel" required style="border-color: black;"></textarea>
+                                                    <textarea class="form-control" id="isi_artikel" name="isi_artikel" required style="border-color: black; border: 1px solid black;"></textarea>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="id_kader">Nama Kader</label>
-                                                    <select class="form-control" id="id_kader" name="id_kader" required style="border-color: black;">
+                                                    <select class="form-control" id="id_kader" name="id_kader" required style="border-color: black; border :1px solid black;">
                                                         <?php
                                                         // Sisipkan file koneksi.php
                                                         include('koneksi.php');
@@ -174,11 +174,11 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="tgl_dibuat">Tanggal Dibuat</label>
-                                                    <input type="date" class="form-control" id="tgl_dibuat" name="tgl_dibuat" required>
+                                                    <input type="date" class="form-control" id="tgl_dibuat" name="tgl_dibuat" required style="border-color: black; border :1px solid black;">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="img_artikel">Gambar</label>
-                                                    <input type="file" class="form-control" id="img_artikel" name="img_artikel" required>
+                                                    <input type="file" class="form-control" id="img_artikel" name="img_artikel" required style="border-color: black; border :1px solid black;">
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
@@ -200,12 +200,12 @@
                                             </div>
                                             <div class="modal-body">
                                                 <p class="small" style="color: black; font-size: 110%;">Apakah Anda yakin ingin menghapus Artikel ini?</p>
-                                                <p class="small" style="color: black; font-size: 110%;"><small>Tindakan ini tidak bisa dibatalkan</small></p>
+                                                <p class="small" style="color: black; font-size: 115%;"><small> Ketika data terhapus Tindakan ini tidak bisa dibatalkan</small></p>
                                                 <input type="hidden" name="idToDelete" id="idToDelete">
                                             </div>
                                             <div class="modal-footer">
-                                                <input type="button" class="btn btn-default" data-dismiss="modal" value="Batal">
-                                                <input type="submit" class="btn btn-danger" value="Delete" name="delete">
+                                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel" style="background-color: blue; color: white;">
+                                            <input type="submit" class="btn btn-danger" value="Delete" name="Hapus" style="background-color: red;">
                                             </div>
                                         </form>
                                     </div>

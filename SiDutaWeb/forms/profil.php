@@ -1,28 +1,31 @@
 <?php
 include("koneksi.php");
 
-// Query SQL untuk mengambil data dari tabel kader
-$sql = "SELECT id_kader, nama_kader, tgl_lahir, alamat, jabatan, tugas_pokok, kata_sandi FROM tbl_kader";
+session_start();
+$kader = $_SESSION['id_kader'];
 
+// Periksa apakah $id_kader memiliki nilai sebelum menjalankan query
+
+// Query SQL untuk mengambil data dari tabel kader
+$sql = "SELECT * FROM tbl_kader WHERE id_kader ='$kader'";
 $result = $koneksi->query($sql);
 
 if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        // Mendeklarasikan variabel dengan nilai yang diambil dari database
-        $id = $row["id_kader"];
-        $nama = $row["nama_kader"];
-        $tanggal = $row["tgl_lahir"];
-        $alamat = $row["alamat"];
-        $jabatan = $row["jabatan"];
-        $tugas = $row["tugas_pokok"];
-        $passsword = $row["kata_sandi"];
-    }
+    $row = $result->fetch_assoc();
+    $id = $row["id_kader"];
+    $nama = $row["nama_kader"];
+    $tanggal = $row["tgl_lahir"];
+    $alamat = $row["alamat"];
+    $jabatan = $row["jabatan"];
+    $tugas = $row["tugas_pokok"];
+    $hashed_password_db = $row["kata_sandi"]; // Retrieve the hashed password
+    $no_telp = $row["no_telp"];
 } else {
-    echo "Tidak ada data kader yang ditemukan.";
+    echo '<script>
+                alert(" Tidak ada data kader yang ditemukan.");
+                window.location.href = "profil.php";
+                </script>';
 }
-
-// include('koneksi.php');
-// include('login.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Mendapatkan data yang akan diperbarui dari formulir
@@ -32,34 +35,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $alamatToUpdate = $_POST['alamat'];
     $jabatanToUpdate = $_POST['jabatan'];
     $tugasPokokToUpdate = $_POST['tugas_pokok'];
-    $passswordToUpdate = $_POST['password'];
+    $passwordToUpdate = isset($_POST['password']) ? $_POST['password'] : '';
+    $noTelpToUpdate = $_POST["no_telp"];
 
-    // Query SQL UPDATE untuk memperbarui data kader
-    $sqlUpdate = "UPDATE tbl_kader SET 
-                                        nama_kader = '$namaKaderToUpdate',
-                                        tgl_lahir = '$tanggalLahirToUpdate',
-                                        alamat = '$alamatToUpdate',
-                                        jabatan = '$jabatanToUpdate',
-                                        tugas_pokok = '$tugasPokokToUpdate',
-                                        kata_sandi = '$passswordToUpdate'
-                                        WHERE id_kader = $idKaderToUpdate";
+    // Verify the entered password with the hashed password stored in the database
+    if (isset($passwordToUpdate) && password_verify($passwordToUpdate, $hashed_password_db)) {
+        // Password verification successful, proceed with the update
 
-    if ($koneksi->query($sqlUpdate) === TRUE) {
-        // echo "Data kader berhasil diperbarui.";
-        // header('location : profil.php');
-        echo '<script>
-                                        alert(" Data Berhasil Diperbaharui");
-                                        window.location.href = "profil.php";
-                                        </script>';
+        // Query SQL UPDATE untuk memperbarui data kader
+        $sqlUpdate = "UPDATE tbl_kader SET 
+                        nama_kader = '$namaKaderToUpdate',
+                        tgl_lahir = '$tanggalLahirToUpdate',
+                        alamat = '$alamatToUpdate',
+                        jabatan = '$jabatanToUpdate',
+                        tugas_pokok = '$tugasPokokToUpdate',
+                        kata_sandi = '$passwordToUpdate',
+                        no_telp = '$noTelpToUpdate'
+                    WHERE id_kader = $idKaderToUpdate";
+
+        if ($koneksi->query($sqlUpdate) === TRUE) {
+            echo '<script>
+                alert(" Data Berhasil Diperbaharui");
+                window.location.href = "profil.php";
+                </script>';
+        } else {
+            echo "Terjadi kesalahan saat memperbarui data: " . $koneksi->error;
+        }
     } else {
-        echo "Terjadi kesalahan saat memperbarui data: " . $koneksi->error;
+        echo '<script>
+            alert("Password yang dimasukkan tidak sesuai.");
+            window.location.href = "profil.php";
+            </script>';
     }
 }
 ?>
 
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="width: 100%;">
 
 <head>
     <meta charset="utf-8" />
@@ -68,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>Profil - SiDuta</title>
-    <link rel="icon" type="image/png" href="siduta.png"/>
+    <link rel="icon" type="image/png" href="siduta.png" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="coba123.css" rel="stylesheet" />
@@ -83,7 +95,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 </head>
 
-<body style="height: 100%; width: 100%;">
+<body style="height: max-content; width: 100%;">
     <div class="wrapper d-flex align-items-stretch">
         <!-- Sidebar -->
         <?php include 'navbar.php'; ?>
@@ -92,7 +104,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="container-fluid px-4">
                     <h1 class="mt-4">Profil Akun</h1>
                     <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="dashboard.php">Dashboard</a></li>
                         <li class="breadcrumb-item active">Profil</li>
                     </ol>
                     <div class="card mb-4">
@@ -107,15 +119,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <!-- Form Group (first name)-->
                                     <div class="col-md-6">
                                         <label class="small mb-1" for="id_kader">ID Kader</label>
-                                        <input class="form-control" id="id_kader" type="text" placeholder="Nik anda" value="<?php echo $id; ?>" name="id_kader" readonly name="id_kader">
+                                        <input class="form-control" id="id_kader" type="text" placeholder="Nik anda" value="<?php echo $kader; ?>" name="id_kader" readonly name="id_kader">
                                     </div>
                                     <div class="col-md-6">
                                         <label class="small mb-1" for="nama_kader">Nama Kader</label>
-                                        <input class="form-control" id="nama_kader" type="text" placeholder="Nama anda" value="<?php echo $nama; ?>" name="nama_kader">
+                                        <input class="form-control" id="nama_kader" type="text" placeholder="Nama anda" value="<?php echo $nama; ?>" name="nama_kader" >
                                     </div>
                                 </div>
-                                 <!-- Form Row        -->
-                                 <div class="row gx-3 mb-3">
+                                <!-- Form Row        -->
+                                <div class="row gx-3 mb-3">
                                     <!-- Form Group (organization name)-->
                                     <div class="col-md-6">
                                         <label class="small mb-1" for="tgl_lahir">Tanggal Lahir</label>
@@ -129,29 +141,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </div>
                                 <!-- Form Row        -->
                                 <div class="row gx-3 mb-3">
-
                                     <!-- Form Group (location)-->
                                     <div class="col-md-6">
                                         <label class="small mb-1" for="jabatan">Jabatan</label>
                                         <input class="form-control" id="jabatan" type="text" placeholder="Jabatan anda" value="<?php echo $jabatan; ?>" name="jabatan">
                                     </div>
+                                    <!-- Form Row-->
                                     <div class="col-md-6">
-                                        <label class="small mb-1" for="password">password</label>
-                                        <input class="form-control" id="password" type="text" placeholder="password anda" value="<?php echo $passsword; ?>" name="password">
+                                        <label class="small mb-1" for="nomor telepon">nomor telpon</label>
+                                        <input class="form-control" id="nomor telepon" type="number" placeholder="nomor anda" value="<?php echo $no_telp; ?>" name="no_telp">
                                     </div>
                                 </div>
-                                <!-- Form Group (email address)-->
-                                <div class="mb-3">
-                                    <label class="small mb-1" for="tugas_pokok">Tugas pokok</label>
-                                    <input class="form-control" id="tugas_pokok" type="text" placeholder="Tugas anda" value="<?php echo $tugas; ?>" name="tugas_pokok">
-                                </div>
-
-                                <!-- Form Row-->
                                 <div class="row gx-3 mb-3">
-                                    <!-- Form Group (phone number)-->
+                                    <!-- Form Group (email address)-->
+                                    <div class="col-md-12">
+                                        <label class="small mb-1" for="tugas_pokok">Tugas pokok</label>
+                                        <input class="form-control" id="tugas_pokok" type="text" placeholder="Tugas anda" value="<?php echo $tugas; ?>" name="tugas_pokok" style="width: 100%;">
+                                    </div>
                                 </div>
                                 <!-- Simpan button-->
-                                <button class="btn btn-primary" type="submit" style="margin-left: 45%; width: 10%; height: 40px; border-radius: 5px; font-size: 15px;">Simpan</button>
+                                <button class="btn btn-primary" type="submit" style=" width: max-content; height: 40px; border-radius: 5px; font-size: 15px;">Simpan</button>
                             </form>
                         </div>
                     </div>

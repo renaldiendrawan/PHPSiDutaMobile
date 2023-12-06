@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="width: 100%;">
 
 <head>
     <meta charset="utf-8" />
@@ -23,7 +23,7 @@
 
 </head>
 
-<body style="height: max-content;">
+<body style="height: max-content;width: auto;">
     <div class="wrapper d-flex align-items-stretch">
         <!-- navbar -->
         <?php include 'navbar.php'; ?>
@@ -38,7 +38,7 @@
                         <li class="breadcrumb-item active">Data Kader Posyandu</li>
                     </ol>
                     <div class="card mb-4">
-                    <div class="card-header" style="font-size: 18px;">
+                        <div class="card-header" style="font-size: 18px;">
                             <i class="fas fa-table me-1" style="margin-top: 8px;"></i>
                             Data Kader
                             <style>
@@ -55,24 +55,24 @@
                             <table id="datatablesSimple" class="table table-hover">
                                 <thead>
                                     <tr>
-                                        <th>NIK Kader</th>
                                         <th>Nama Kader</th>
                                         <th>Tanggal Lahir</th>
                                         <th>Alamat</th>
                                         <th>Jabatan</th>
                                         <th>Tugas Pokok</th>
+                                        <th>No. Telepon</th>
                                         <th>Foto Kader</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <th>NIK Kader</th>
                                         <th>Nama Kader</th>
                                         <th>Tanggal Lahir</th>
                                         <th>Alamat</th>
                                         <th>Jabatan</th>
                                         <th>Tugas Pokok</th>
+                                        <th>No. Telepon</th>
                                         <th>Foto Kader</th>
                                         <th>Aksi</th>
                                     </tr>
@@ -94,15 +94,18 @@
                                             $alamat = $row['alamat'];
                                             $jabatan = $row['jabatan'];
                                             $tugas_pokok = $row['tugas_pokok'];
+                                            $no_telp = $row['no_telp'];
                                             $img_kader = $row['img_kader'];
 
+
                                             echo '<tr>';
-                                            echo '<td>' . $id_kader . '</td>';
                                             echo '<td>' . $nama_kader . '</td>';
                                             echo '<td>' . $tgl_lahir . '</td>';
                                             echo '<td>' . $alamat . '</td>';
                                             echo '<td>' . $jabatan . '</td>';
                                             echo '<td>' . $tugas_pokok . '</td>';
+                                            echo '<td>' . $no_telp . '</td>';
+
                                             echo '<td><img src="berkas/team/' . $img_kader . '" alt="Foto Kader" width="50" height="50"></td>';
                                             echo '<td>';
                                             echo '<a href="#editEmployeeModal-' . $id_kader . '" class="edit" data-toggle="modal" data-target="#editEmployeeModal-' . $id_kader . '"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>';
@@ -119,10 +122,6 @@
                                   <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
                               </div>
                               <div class='modal-body'>
-                                  <div class='form-group'>
-                                      <label for='nik-" . $row["id_kader"] . "'>NIK Kader</label>
-                                      <input type='text' class='form-control' id='nik-" . $row["id_kader"] . "' name='nik' value='" . $row["id_kader"] . "' required>
-                                  </div>
                                   <div class='form-group'>
                                       <label for='nama-" . $row["id_kader"] . "'>Nama Kader</label>
                                       <input type='text' class='form-control' id='nama-" . $row["id_kader"] . "' name='nama' value='" . $row["nama_kader"] . "' required>
@@ -142,6 +141,10 @@
                                   <div class='form-group'>
                                       <label for='tugas-pokok-" . $row["id_kader"] . "'>Tugas Pokok</label>
                                       <input type='text' class='form-control' id='tugas-pokok-" . $row["id_kader"] . "' name='tugas-pokok' value='" . $row["tugas_pokok"] . "' required>
+                                  </div>
+                                  <div class='form-group'>
+                                      <label for='no_telp-" . $row["id_kader"] . "'>No.Telepon</label>
+                                      <input type='text' class='form-control' id='no_telp-" . $row["id_kader"] . "' name='no_telp' value='" . $row["no_telp"] . "' required>
                                   </div>
                               </div>
                               <div class='modal-footer'>
@@ -172,32 +175,42 @@
                                             </div>
                                             <div class="modal-body">
                                                 <div class="form-group">
-                                                    <label for="nik">NIK Kader</label>
-                                                    <input type="text" id="id_kader" name="id_kader" class="form-control" required>
-                                                </div>
-                                                <div class="form-group">
                                                     <label for="nama">Nama Kader</label>
-                                                    <input type="text" id="nama_kader" name="nama_kader" class="form-control" required>
+                                                    <input type="text" id="nama_kader" name="nama_kader" class="form-control" required style="border-color: black; border :1px solid black;">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="tanggal-lahir">Tanggal Lahir</label>
-                                                    <input type="date" id="tgl_lahir" name="tgl_lahir" class="form-control" required>
+                                                    <input type="date" id="tgl_lahir" name="tgl_lahir" class="form-control" required style="border-color: black; border :1px solid black;">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="alamat">Alamat</label>
-                                                    <input type="text" id="alamat" name="alamat" class="form-control" required>
+                                                    <input type="text" id="alamat" name="alamat" class="form-control" required style="border-color: black; border :1px solid black;">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="jabatan">Jabatan</label>
-                                                    <input type="text" id="jabatan" name="jabatan" class="form-control" required>
+                                                    <select id="jabatan" name="jabatan" class="form-control" required style="border-color: black; border :1px solid black;">
+                                                        <option value="" selected disabled>Pilih Jabatan</option>
+                                                        <option value="Ketua">Ketua</option>
+                                                        <option value="Bendahara">Bendahara</option>
+                                                        <option value="Sekretaris">Sekretaris</option>
+                                                        <option value="Anggota">Anggota</option>
+                                                    </select>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="tugas-pokok">Tugas Pokok</label>
-                                                    <input type="text" id="tugas_pokok" name="tugas_pokok" class="form-control" required>
+                                                    <input type="text" id="tugas_pokok" name="tugas_pokok" class="form-control" required style="border-color: black; border :1px solid black;">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="no_telp">No.Telepon</label>
+                                                    <input type="number" id="no_telp" name="no_telp" class="form-control" required style="border-color: black; border :1px solid black;">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="kata_sandi">Kata Sandi</label>
+                                                    <input type="text" id="kata_sandi" name="kata_sandi" class="form-control" required style="border-color: black; border :1px solid black;">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="img-kader">Foto Kader</label>
-                                                    <input type="file" id="img_kader" name="img_kader" class="form-control" accept="image/*" required>
+                                                    <input type="file" id="img_kader" name="img_kader" class="form-control" accept="image/*" required style="border-color: black; border :1px solid black;">
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
@@ -218,13 +231,13 @@
                                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                             </div>
                                             <div class="modal-body">
-                                                <p>Apakah Anda yakin ingin menghapus data ini?</p>
-                                                <p class="text-warning"><small>Tindakan ini tidak bisa dibatalkan</small></p>
+                                                <p style="color: black;">Apakah Anda yakin ingin menghapus data ini?</p>
+                                                <p class="small" style="color: black; font-size: 115%;"><small> Ketika data terhapus Tindakan ini tidak bisa dibatalkan</small></p>
                                                 <input type="hidden" name="idToDelete" id="idToDelete">
                                             </div>
                                             <div class="modal-footer">
-                                                <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                                                <input type="submit" class="btn btn-danger" value="Delete" name="delete">
+                                                <input type="button" class="btn btn-default" data-dismiss="modal" style="background-color: blue; color: white;" value="Batal">
+                                                <input type="submit" class="btn btn-danger" value="Hapus" style="background-color: red;" name="Hapus">
                                             </div>
                                         </form>
                                     </div>

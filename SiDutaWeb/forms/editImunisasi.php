@@ -8,9 +8,9 @@ if (isset($_POST['update'])) {
     $jenis_imunisasi = $_POST['jenis_imunisasi'];
 
     // Query untuk mengupdate data imunisasi
-    $query = "UPDATE tbl_imunisasi SET 
+    $query = "UPDATE imunisasi SET 
     id_anak = '$id_anak', 
-    tgl_imunisasi = '$tgl_imunisasi', 
+    tanggal_imunisasi = '$tgl_imunisasi', 
     jenis_imunisasi = '$jenis_imunisasi' 
     WHERE id_imunisasi = '$id_imunisasi'";
 

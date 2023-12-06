@@ -17,15 +17,14 @@ try {
     // Set mode error PDO ke exception
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // Membuat kueri SQL
+    // Membuat kueri SQL dengan menambahkan ORDER BY
     $userQuery = $pdo->prepare("SELECT tbl_anak.nama_anak, penimbangan.tgl_penimbangan, penimbangan.berat_badan, penimbangan.tinggi_badan, penimbangan.id_penimbangan
         FROM `penimbangan` 
         JOIN tbl_anak 
         ON penimbangan.id_anak = tbl_anak.id_anak 
         WHERE tbl_anak.nik_ibu = :nik_ibu
         GROUP BY penimbangan.id_penimbangan
-        ORDER BY tbl_anak.id_anak ASC");
-
+        ORDER BY penimbangan.tgl_penimbangan DESC");  // Mengubah urutan tanggal menjadi terurut dari yang terbaru ke yang terlama
     $userQuery->bindParam(':nik_ibu', $idIbu, PDO::PARAM_INT);
     $userQuery->execute();
 
@@ -53,3 +52,4 @@ try {
 
 // Menutup koneksi ke database
 $pdo = null;
+?>

@@ -1,7 +1,7 @@
 <?php
 include("koneksi.php");
 
-if (isset($_POST['delete'])) {
+if (isset($_POST['Hapus'])) {
     // Ambil ID anak yang akan dihapus dari input form
     $idToDelete = $_POST['idToDelete'];
 

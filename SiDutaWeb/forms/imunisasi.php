@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="width: auto;">
 
 <head>
     <meta charset="utf-8" />
@@ -23,7 +23,7 @@
 
 </head>
 
-<body style="height: 100%; width: 100%;">
+<body style="height: max-content;width: auto;">
     <div class="wrapper d-flex align-items-stretch">
         <!-- Sidebar -->
         <?php include 'navbar.php'; ?>
@@ -32,7 +32,7 @@
                 <div class="container-fluid px-4">
                     <h1 class="mt-4">Data Imunisasi</h1>
                     <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="dashboard.php">Dashboard</a></li>
                         <li class="breadcrumb-item active">Data Imunisasi</li>
                     </ol>
                     <div class="card mb-4">
@@ -76,9 +76,9 @@
                                     <?php
                                     include("koneksi.php");
                                     // Query SQL dengan INNER JOIN untuk mengambil data imunisasi anak
-                                    $sql = "SELECT tbl_imunisasi.*, tbl_anak.nama_anak 
-            FROM tbl_imunisasi
-            INNER JOIN tbl_anak ON tbl_imunisasi.id_anak = tbl_anak.id_anak";
+                                    $sql = "SELECT imunisasi.*, tbl_anak.nama_anak 
+            FROM imunisasi
+            INNER JOIN tbl_anak ON imunisasi.id_anak = tbl_anak.id_anak";
 
                                     $result = $koneksi->query($sql);
 
@@ -87,7 +87,7 @@
                                             echo "<tr>";
                                             echo "<th>" . $row["id_anak"] . "</th>";
                                             echo "<th>" . $row["nama_anak"] . "</th>";
-                                            echo "<th>" . $row["tgl_imunisasi"] . "</th>";
+                                            echo "<th>" . $row["tanggal_imunisasi"] . "</th>";
                                             echo "<th>" . $row["jenis_imunisasi"] . "</th>";
                                             echo "<th>
               <a href='#editImunisasiModal-" . $row["id_imunisasi"] . "' class='edit' data-toggle='modal'><i class='material-icons' data-toggle='tooltip' title='Edit'>&#xE254;</i></a>
@@ -112,7 +112,7 @@
                       </div>
                       <div class='form-group'>
                         <label for='tgl_imunisasi-" . $row["id_imunisasi"] . "'>Tanggal Imunisasi</label>
-                        <input type='date' class='form-control' id='tgl_imunisasi-" . $row["id_imunisasi"] . "' name='tgl_imunisasi' value='" . $row["tgl_imunisasi"] . "' required>
+                        <input type='date' class='form-control' id='tgl_imunisasi-" . $row["id_imunisasi"] . "' name='tgl_imunisasi' value='" . $row["tanggal_imunisasi"] . "' required>
                       </div>
                       <div class='form-group'>
                         <label for='jenis_imunisasi-" . $row["id_imunisasi"] . "'>Jenis Imunisasi</label>
@@ -149,7 +149,7 @@
                                             <div class="modal-body">
                                                 <div class="form-group">
                                                     <label for="id_anak">Pilih Anak</label>
-                                                    <select id="id_anak" name="id_anak" class="form-control" required>
+                                                    <select id="id_anak" name="id_anak" class="form-control" required style="border-color: black; border :1px solid black;">
                                                         <?php
                                                         include("koneksi.php");
                                                         $sql = "SELECT id_anak, nama_anak FROM tbl_anak";
@@ -162,18 +162,18 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="tgl_imunisasi">Tanggal Imunisasi</label>
-                                                    <input type="date" id="tgl_imunisasi" name="tgl_imunisasi" class="form-control" required>
+                                                    <input type="date" id="tgl_imunisasi" name="tgl_imunisasi" class="form-control" required style="border-color: black; border :1px solid black;">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="jenis_imunisasi" style="font-size: 15px;">Jenis Imunisasi</label>
-                                                    <select id="jenis_imunisasi" name="jenis_imunisasi" style="font-size: 13px;" class="form-control" required>
+                                                    <select id="jenis_imunisasi" name="jenis_imunisasi" style="font-size: 13px;" class="form-control" required style="border-color: black; border :1px solid black;">
                                                         <!-- Options will be dynamically added here using JavaScript -->
                                                     </select>
                                                 </div>
 
                                                 <script>
                                                     // Get the select element
-                                                    var jenisImunisasiSelect = document.getElementById("jenis_imunisasi");
+                                                    var jenisImunisasiSelect = document.getElementById("jenis_imunisasi") ;
 
                                                     // Array of options
                                                     var options = [
@@ -225,12 +225,12 @@
                                             </div>
                                             <div class="modal-body">
                                                 <p class="small" style="color: black; font-size: 110%;">Apakah Anda yakin ingin menghapus data ini?</p>
-                                                <p class="small" style="color: black; font-size: 130%;"><small>Tindakan ini tidak bisa dibatalkan</small></p>
+                                                <p class="small" style="color: black; font-size: 115%;"><small> Ketika data terhapus Tindakan ini tidak bisa dibatalkan</small></p>
                                                 <input type="hidden" name="idToDelete" id="idToDelete">
                                             </div>
                                             <div class="modal-footer">
                                                 <input type="button" class="btn btn-default" data-dismiss="modal" value="Batal" style="background-color: blue; color: white;">
-                                                <input type="submit" class="btn btn-danger" value="Hapus" name="delete">
+                                                <input type="submit" class="btn btn-danger" value="Hapus" name="Hapus" style="background-color: red;">
                                             </div>
                                         </form>
                                     </div>
